@@ -107,7 +107,7 @@ function hearts(){
 const cv=$('gal'),cx=cv.getContext('2d');let W,H,dpr;
 function size(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0)}
 addEventListener('resize',()=>{size();layout()});size();
-const COLS=50,ROWS=89,N=COLS*ROWS,TOK=['люблю','love','amo','❤','я ❤','te amo','liebe','🤍'.length?'t\'aime':''];
+const COLS=50,ROWS=89,N=COLS*ROWS,TOK=['люблю','love','amo','♥','я ♥','te amo','liebe','🤍'.length?'t\'aime':''];
 let zm=1,zt=1,pd=1,P=[],rot=0,tilt=1.0,vr=.004,drag=false,lx=0,ly=0,morph=0,morphOn=false,cells=[];
 for(let i=0;i<N;i++){
  const arm=i%3,r=Math.pow(Math.random(),.6),a=arm*2.094+r*5.2+(Math.random()-.5)*.55*(1.1-r*.6);
@@ -132,7 +132,7 @@ function frame(ts){
  if(morphOn&&morph<1.6)morph+=.0045;
  cx.clearRect(0,0,W,H);cx.textAlign='center';cx.textBaseline='middle';
  const R=Math.min(W*.48,H*.3),cr=Math.cos(rot),sr=Math.sin(rot),ct=Math.cos(tilt),st=Math.sin(tilt),cyc=H*.5;
- zm+=(zt-zm)*.15;const fs0=Math.max(7,R/28)*zm,pa=morphOn&&im.complete?Math.max(0,Math.min(1,(morph-1)/.6))*.85:0;if(pa>0){cx.globalAlpha=pa;cx.drawImage(im,ox,oy,COLS*cs,ROWS*cs);cx.globalAlpha=1}
+ zm+=(zt-zm)*.15;const fs0=Math.max(7,R/28)*zm,pa=morphOn&&im.complete?Math.max(0,Math.min(1,(morph-1)/.6)):0;if(pa>0){cx.globalAlpha=pa;cx.drawImage(im,ox,oy,COLS*cs,ROWS*cs);cx.globalAlpha=1}
  for(let i=0;i<N;i++){
   const p=P[i],ang=p.a+rot*0,x0=Math.cos(p.a)*p.r,z0=Math.sin(p.a)*p.r;
   const x1=x0*cr-z0*sr,z1=x0*sr+z0*cr,y1=p.y*ct-z1*st,zz=p.y*st+z1*ct;
@@ -140,8 +140,8 @@ function frame(ts){
   if(morphOn&&p.pc){const k=ease((morph-p.d)/.9);
    X+=(p.tx-X)*k;Y+=(p.ty-Y)*k;fs+=(cs*.95-fs)*k;a+=(1-a)*k;
    rgb=[p.gc[0]+(p.pc[0]-p.gc[0])*k|0,p.gc[1]+(p.pc[1]-p.gc[1])*k|0,p.gc[2]+(p.pc[2]-p.gc[2])*k|0]}
-  if(X<-60||X>W+60||Y<-30||Y>H+30)continue;cx.font=(fs|0)+'px Georgia,serif';
-  cx.fillStyle='rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+a*(1-.6*pa)+')';
+  if(pa>.995||X<-60||X>W+60||Y<-30||Y>H+30)continue;cx.font=(fs|0)+'px Georgia,serif';
+  cx.fillStyle='rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+a*(1-pa)+')';
   cx.fillText(p.w,X,Y);
  }
  // світле ядро
@@ -167,4 +167,5 @@ function galaxy(){
   setTimeout(()=>{cap.textContent='Дашулько, я тебе люблю ❤';cap.classList.add('on')},7500);
  }),3500);
 }
+</script></body></html>
 </script></body></html>
